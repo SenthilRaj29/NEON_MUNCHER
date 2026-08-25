@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NEON MUNCHER — Arcade Cabinet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://www.youtube.com/iframe_api" async></script>
+</head>
+<body>
+<div class="cabinet">
+  <div class="marquee">
+    <h1>NEON MUNCHER</h1>
+    <div class="sub">◆ ARCADE EDITION ◆</div>
+  </div>
+
+  <div class="screen">
+
+    <!-- ===================== LOGIN SCREEN ===================== -->
+    <div id="screen-login" class="app-screen">
+      <div class="login-mark" aria-hidden="true">●</div>
+      <h2 class="screen-title">WELCOME, PLAYER</h2>
+      <p class="screen-copy">Save your arcade progress and pick up where you left off.</p>
+      <div class="login-panel">
+        <div class="login-panel-title">PLAYER ACCESS</div>
+        <form id="auth-form" class="auth-form">
+          <label>USERNAME<input id="auth-username" name="username" autocomplete="username" required></label>
+          <label>PASSWORD<div class="password-field"><input id="auth-password" name="password" type="password" autocomplete="current-password" required><button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><span aria-hidden="true">&#128065;</span></button></div></label>
+          <button class="pill-btn" type="submit">LOG IN</button>
+        </form>
+        <div class="auth-links"><button id="register-btn" type="button">NEW USER</button><button id="forgot-btn" type="button">FORGOT PASSWORD</button></div>
+        <p id="auth-status" class="auth-status" role="status"></p>
+        <div class="auth-divider">OR</div>
+        <div id="google-btn-container" class="google-btn-container"></div>
+        <button id="guest-btn" class="pill-btn">CONTINUE AS GUEST</button>
+      </div>
+    </div>
+
+    <div id="screen-register" class="app-screen hidden">
+      <h2 class="screen-title">NEW USER</h2>
+      <p class="screen-copy">Create an account to save levels and scores in MongoDB.</p>
+      <div class="login-panel">
+        <form id="register-form" class="auth-form">
+          <label>USERNAME<input id="register-username" autocomplete="username" required></label>
+          <label>PASSWORD<div class="password-field"><input id="register-password" type="password" autocomplete="new-password" minlength="8" required><button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><span aria-hidden="true">&#128065;</span></button></div></label>
+          <label>CONFIRM PASSWORD<div class="password-field"><input id="register-confirm" type="password" autocomplete="new-password" minlength="8" required><button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><span aria-hidden="true">&#128065;</span></button></div></label>
+          <button class="pill-btn" type="submit">CREATE ACCOUNT</button>
+        </form>
+        <p id="register-status" class="auth-status" role="status"></p>
+        <button class="text-link" data-auth-screen="login" type="button">LOGIN</button>
+      </div>
+    </div>
+
+    <div id="screen-forgot" class="app-screen hidden">
+      <h2 class="screen-title">RESET PASSWORD</h2>
+      <p class="screen-copy">Request a reset code, then choose a new password.</p>
+      <div class="login-panel">
+        <form id="forgot-form" class="auth-form">
+          <label>USERNAME<input id="forgot-username" autocomplete="username" required></label>
+          <button class="pill-btn small" id="request-reset-btn" type="button">REQUEST CODE</button>
+          <label>RESET CODE<input id="reset-code" autocomplete="one-time-code" required></label>
+          <label>NEW PASSWORD<div class="password-field"><input id="reset-password" type="password" autocomplete="new-password" minlength="8" required><button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><span aria-hidden="true">&#128065;</span></button></div></label>
+          <button class="pill-btn" type="submit">RESET PASSWORD</button>
+        </form>
+        <p id="forgot-status" class="auth-status" role="status"></p>
+        <button class="text-link" data-auth-screen="login" type="button">BACK TO LOGIN</button>
+      </div>
+    </div>
+
+    <div id="screen-welcome" class="app-screen hidden">
+      <div class="welcome-mark" aria-hidden="true">◆</div>
+      <p class="welcome-kicker">PLAYER VERIFIED</p>
+      <h2 class="screen-title">WELCOME BACK</h2>
+      <p class="welcome-name" id="welcome-name">PLAYER</p>
+      <p class="screen-copy">Your arcade progress is ready.</p>
+      <button id="welcome-continue" class="pill-btn" type="button">ENTER ARCADE</button>
+    </div>
+
+    <div id="screen-home" class="app-screen hidden home-screen">
+      <div class="home-header"><div><p class="welcome-kicker">ARCADE HOME</p><h2 class="screen-title">READY, <span id="home-name">PLAYER</span>?</h2></div><button id="home-signout" class="pill-btn small" type="button">SIGN OUT</button></div>
+      <div class="home-actions"><button id="home-play" class="pill-btn" type="button">PLAY LEVEL <span id="home-play-level">1</span></button><button id="home-highscores" class="pill-btn small" type="button">HIGH SCORES</button></div>
+      <section class="progress-panel"><div class="progress-heading"><span>MISSION PROGRESS</span><strong id="home-progress-label">LEVEL 1 / 50</strong></div><div id="progress-map" class="progress-map" aria-label="Mission progress map"></div><p id="career-status" class="career-status" role="status" aria-live="polite"></p></section>
+      <button id="home-settings-toggle" class="pill-btn small" type="button">SETTINGS</button>
+      <div id="home-settings" class="settings-panel hidden">
+        <strong>SETTINGS</strong>
+        <button class="audio-toggle" data-home-action="sound" type="button">SOUND: ON</button>
+        <button class="audio-toggle" data-home-action="music" type="button">MUSIC: ON</button>
+      </div>
+    </div>
+
+    <!-- ===================== HIGH SCORES SCREEN ===================== -->
+    <div id="screen-highscores" class="app-screen hidden">
+      <div class="levels-header">
+        <div id="player-badge" class="player-badge"></div>
+        <div class="highscore-actions"><button id="highscores-career-btn" class="pill-btn small" type="button">CAREER</button></div>
+      </div>
+      <h2 class="screen-title">HIGH SCORES</h2>
+      <div class="levels-intro"><span>ARCADE RECORDS</span><strong id="score-progress">1 / 50 PLAYED</strong></div>
+      <div id="highscore-grid" class="highscore-list"></div>
+    </div>
+
+    <!-- ===================== GAME SCREEN ===================== -->
+    <div id="screen-game" class="app-screen hidden">
+      <div class="hud">
+        <div><span class="label">SCORE</span><span id="score">0</span></div>
+        <div><span class="label">LIVES</span><div id="lives"></div></div>
+        <div><span class="label">HIGH</span><span id="highscore">0</span></div>
+        <div><span class="label">LEVEL</span><span id="level">1</span></div>
+      </div>
+      <div id="control-flag" class="control-flag hidden">⚠ CONTROLS REVERSED</div>
+
+      <canvas id="game" width="456" height="504"></canvas>
+      <div class="scanlines"></div>
+      <div class="crt-glow"></div>
+
+      <div id="overlay" class="hidden"></div>
+      <div class="controls-hint">ARROWS / WASD to move · <span class="kbd">P</span> pause · <span class="kbd">ENTER</span> confirm</div>
+      <div id="bgm-player" aria-hidden="true"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Load order matters: main.js loads LAST since it starts the loop -->
+<script src="js/config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/maze.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/render.js"></script>
+<script src="js/pacman.js"></script>
+<script src="js/ghosts.js"></script>
+<script src="js/levels.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/screens.js"></script>
+<script src="js/main.js"></script>
+<script type="module" src="js/adventure-map-3d.js"></script>
+</body>
+</html>
