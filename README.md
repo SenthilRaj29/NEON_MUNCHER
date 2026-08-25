@@ -1,4 +1,4 @@
-# Neon Muncher 🎮
+<img width="1358" height="602" alt="image" src="https://github.com/user-attachments/assets/60aa6857-3b3b-46c4-9c1c-f45c7c33ebc1" /># Neon Muncher 🎮
 
 **Neon Muncher** is a 50-level Pac-Man-style browser game built with **HTML, CSS, JavaScript, Canvas, and Three.js**. It combines classic maze gameplay with a neon arcade-style interface, progressive difficulty, ghost AI, scoring, audio effects, and an interactive 3D career map.
 
@@ -35,3 +35,7 @@ Players begin as a guest or account user, enter the neon arcade interface, selec
 The frontend can be launched using **VS Code Live Server** or a simple Python HTTP server. The optional Node.js/Express backend provides account authentication and MongoDB progress synchronization.
 
 > **Neon Muncher** was built as a personal game development project to explore browser game development, JavaScript architecture, Canvas rendering, game logic, AI behavior, 3D interfaces, audio systems, authentication, and database integration.
+>
+> OUTPUT:
+> <img width="1358" height="602" alt="image" src="https://github.com/user-attachments/assets/3547b955-d648-4747-981d-951e46d96d48" />
+
